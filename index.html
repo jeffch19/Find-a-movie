@@ -29,10 +29,10 @@
 <!-- insert search bar here -- possibly in another div -- used bulma-->
 <div class="field has-addons">
   <div class="control">
-    <input class="input" type="text" placeholder="Search...">
+    <input id="search" class="input" type="text" placeholder="Search...">
   </div>
   <div class="control">
-    <a class="button is-info">
+    <a id="search-button" class="button is-info">
       Search
     </a>
   </div>
@@ -43,10 +43,8 @@
 
 <!-- movie display section -->
 <div class="display-movie-div">
-  <h3>Movie/show title</h3>
-  <div class="div-with-movie">display image here</div>
-  <div>display description here</div>
-  <div>possibly add a row here of related movies???? we shall see</div>
+  <h3>Search Results:</h3>
+  <div id="movie-info" class="div-with-movie"></div>
 </div>
 
 

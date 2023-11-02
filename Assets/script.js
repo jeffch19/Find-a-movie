@@ -1,48 +1,47 @@
-function secondFetch(movie, year){
+var searchBtn = document.getElementById('search-button')
+
+function secondFetch(movie){
     var searchUrl = 'http://www.omdbapi.com/';
     var apiKey = '?apikey=f0621784';
-    var movieName = "&t=" + movie;
-    var movieYear = "&y=" + year;
-    var additionalPar = '&plot=full'
-    var url = searchUrl + apiKey + additionalPar + movieYear + movieName;
+    var movieName = "&s=" + movie;
+    var url = searchUrl + apiKey + movieName;
     console.log(url);
     fetch(url)
     .then(function(response){
       return response.json();
     })
     .then(function(data) {
-      console.log(data);
-      var title = data.Title;
-      var poster = data.Poster;
-      var plot = data.Plot;
-      console.log(plot);
-
+      console.log(data.Search.length);
+      for (i = 0; i < data.Search.length; i++){
+      var title = data.Search[i].Title;
+      var poster = data.Search[i].Poster;
+      var year = data.Search[i].Year;
     // //creates poster
-    // var imgEl = $('<img>');
+    var imgEl = $('<img>');
 
-    // imgEl.attr('src', poster);
+    imgEl.attr('src', poster);
 
-    // $('body').append(imgEl);
+    $('#movie-info').append(imgEl);
 
     // //creates title
-    // var titleEl = $('<h1>');
+    var titleEl = $('<p>');
 
-    // titleEl.text(title)
-     
-    // $('body').append(titleEl);
+    titleEl.text(title)
+
+    $('#movie-info').append(titleEl);
 
     // //creates description
-    // var descEl = $('<p>');
+    var yearEl = $('<p>');
 
-    // descEl.text(plot)
-         
-    // $('body').append(descEl);
-           
+    yearEl.text(year)
 
+    $('#movie-info').append(yearEl);
+      }
     })
 
   };
 
-  // var movie = 'lord of the rings'
-  // var year = ' 2003'
-  // secondFetch(movie, year);
+  searchBtn.addEventListener('click', function(){
+      var searchValue = document.getElementById('search').value;
+      secondFetch(searchValue);
+  })
