@@ -17,32 +17,32 @@ function secondFetch(movie, year){
       var plot = data.Plot;
       console.log(plot);
 
-    //creates poster
-    var imgEl = $('<img>');
+    // //creates poster
+    // var imgEl = $('<img>');
 
-    imgEl.attr('src', poster);
+    // imgEl.attr('src', poster);
 
-    $('body').append(imgEl);
+    // $('body').append(imgEl);
 
-    //creates title
-    var titleEl = $('<h2>');
+    // //creates title
+    // var titleEl = $('<h1>');
 
-    titleEl.text(title)
+    // titleEl.text(title)
      
-    $('body').append(titleEl);
+    // $('body').append(titleEl);
 
-    //creates title
-    var descEl = $('<p>');
+    // //creates description
+    // var descEl = $('<p>');
 
-    descEl.text(plot)
+    // descEl.text(plot)
          
-    $('body').append(descEl);
+    // $('body').append(descEl);
            
 
     })
 
   };
 
-  var movie = 'lord of the rings'
-  var year = ' 2003'
-  secondFetch(movie, year);
+  // var movie = 'lord of the rings'
+  // var year = ' 2003'
+  // secondFetch(movie, year);
