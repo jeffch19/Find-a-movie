@@ -21,21 +21,21 @@ function secondFetch(movie){
 
     imgEl.attr('src', poster);
 
-    $('body').append(imgEl);
+    $('#movie-info').append(imgEl);
 
     // //creates title
-    var titleEl = $('<h2>');
+    var titleEl = $('<p>');
 
     titleEl.text(title)
-     
-    $('body').append(titleEl);
+
+    $('#movie-info').append(titleEl);
 
     // //creates description
     var yearEl = $('<p>');
 
     yearEl.text(year)
-         
-    $('body').append(yearEl);
+
+    $('#movie-info').append(yearEl);
       }
     })
 
