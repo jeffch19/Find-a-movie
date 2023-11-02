@@ -1,0 +1,38 @@
+nav.title { 
+  font-family: 'PF Regal Swash Pro', sans-serif;
+}
+
+/* nav bar */
+.title {
+  display: flex;
+  justify-content: space-around;
+  font-size: 72px;
+}
+
+/* div with heres how it works and description and search button */
+.main-info-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px; 
+  background-color: antiquewhite;
+}
+/* heres how it works section */
+h2 {
+  font-size: 48px;
+  
+  
+}
+/* text below heres how it works */
+.description-text {
+  display: flex;
+  
+  line-height: 2;
+}
+
+.display-movie-div {
+  display: flex;
+  padding: 100px;
+  flex-direction: column;
+  align-items: center;
+}

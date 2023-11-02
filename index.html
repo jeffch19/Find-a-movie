@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pick-a-Movie</title>
+  <!-- Font Link -->
+  <link href="https://fonts.cdnfonts.com/css/pf-regal-swash-pro" rel="stylesheet">
+                
   <!-- Bulma link -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <!-- Custom CSS link -->
@@ -19,9 +22,9 @@
 
 
 <!-- Search Box -->
-<div>
+<div class="main-info-box">
 <h2>Here's how it works</h2>
-<p>Search a movie or show of interest below. We will display where your movie/show is streaming and if it is free or requires a subscription. We will save your searched movies/shows to local storage so that you can see what you searched!</p>
+<p class="description-text">Search a movie or show of interest below. We will display where your movie/show is streaming and if it is free or requires a subscription. We will save your searched movies/shows to local storage so that you can see what you searched!</p>
 
 <!-- insert search bar here -- possibly in another div -- used bulma-->
 <div class="field has-addons">
@@ -37,6 +40,16 @@
 
 
 </div>
+
+<!-- movie display section -->
+<div class="display-movie-div">
+  <h3>Movie/show title</h3>
+  <div class="div-with-movie">display image here</div>
+  <div>display description here</div>
+  <div>possibly add a row here of related movies???? we shall see</div>
+</div>
+
+
 
 
 <!-- Main box with search bar, description -->
