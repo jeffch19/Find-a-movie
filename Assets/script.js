@@ -1,4 +1,5 @@
 var searchBtn = document.getElementById('search-button');
+$('.reset-btn-div').css('display', 'none');
 
 function secondFetch(movie){
     var searchUrl = 'http://www.omdbapi.com/';
@@ -43,6 +44,11 @@ function secondFetch(movie){
 
   searchBtn.addEventListener('click', function(){
     $(".main-info-box").css('display', 'none');
+    $('.reset-btn-div').css('display', 'flex');
       var searchValue = document.getElementById('search').value;
       secondFetch(searchValue);
+  })
+
+  $('#reset-button').on('click', function(){
+    location.reload();
   })
