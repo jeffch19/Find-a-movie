@@ -16,12 +16,30 @@
 
 <body>
   <!-- Title bar -->
-<nav class="title">
-  Pick-a-Movie
-</nav>
-
+  <header>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="title">
+        <h1>Pick A Movie</h1>
+    
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+    
+      <!-- <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item">
+            Home
+          </a>
+        </div>
+      </div> -->
+    </nav>
+  </header>
 
 <!-- Search Box -->
+<<<<<<< HEAD
 <div class="main-info-box">
 <h2>Here's how it works</h2>
 <p class="description-text">Search a movie or show of interest below. We will display where your movie/show is streaming and if it is free or requires a subscription. We will save your searched movies/shows to local storage so that you can see what you searched!</p>
@@ -67,7 +85,24 @@
   
   </div>
 
+=======
+  <section class="hero-area">
+    <h2>Here's how it works</h2>
+    <p>Search a movie or show of interest below. We will display where your movie/show is streaming and if it is free or requires a subscription. We will save your searched movies/shows to local storage so that you can see what you searched!</p>
+>>>>>>> da7b183 (pulling origin main)
 
+    <!-- insert search bar here -- possibly in another div -- used bulma-->
+    <div class="field has-addons">
+      <div class="control">
+        <input class="input" type="text" placeholder="Search...">
+      </div>
+      <div class="control">
+        <a class="button is-info">
+          Search
+        </a>
+      </div>
+    </div>
+  </section>
 <!-- Main box with search bar, description -->
 
 <!-- Jquery Link -->
