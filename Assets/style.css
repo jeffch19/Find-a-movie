@@ -1,9 +1,9 @@
-nav.title { 
+nav h1 { 
   font-family: 'PF Regal Swash Pro', sans-serif;
 }
 
 /* nav bar */
-.title {
+.navbar {
   display: flex;
   justify-content: space-around;
   font-size: 72px;
