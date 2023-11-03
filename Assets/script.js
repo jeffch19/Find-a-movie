@@ -42,6 +42,7 @@ function secondFetch(movie){
   };
 
   searchBtn.addEventListener('click', function(){
+    $(".main-info-box").css('display', 'none');
       var searchValue = document.getElementById('search').value;
       secondFetch(searchValue);
   })
