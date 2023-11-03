@@ -1,6 +1,7 @@
 var searchBtn = document.getElementById('search-button');
 $('.reset-btn-div').css('display', 'none');
 
+// second fetch OMBD
 function secondFetch(movie){
     var searchUrl = 'http://www.omdbapi.com/';
     var apiKey = '?apikey=f0621784';
@@ -52,3 +53,30 @@ function secondFetch(movie){
   $('#reset-button').on('click', function(){
     location.reload();
   })
+
+//   first fetch movie of the night
+
+
+async function firstFetch (movie) {
+    const url = 'https://streaming-availability.p.rapidapi.com/search/title?title=Friends&country=us&show_type=movie&output_language=en&';
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '2f43227628msh7e02f532e1891e0p188cd9jsndd7637ba78ac',
+            'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com'
+        }
+            };
+    try {
+        const response = await fetch(url, options);
+        const movies = await response.json();
+        console.log(movies.result);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+
+firstFetch()
+
+
