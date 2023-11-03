@@ -1,8 +1,5 @@
-var searchBtn = document.getElementById('search-button');
-$('.reset-btn-div').css('display', 'none');
-
-// second fetch OMBD
-function secondFetch(movie){
+<<<<<<<<< Temporary merge branch 1
+function secondFetch(movie, year){
     var searchUrl = 'http://www.omdbapi.com/';
     var apiKey = '?apikey=f0621784';
     var movieName = "&s=" + movie;
@@ -43,44 +40,33 @@ function secondFetch(movie){
 
   };
 
-  searchBtn.addEventListener('click', function(){
-    $(".main-info-box").css('display', 'none');
-    $('.reset-btn-div').css('display', 'flex');
-      var searchValue = document.getElementById('search').value;
-      secondFetch(searchValue);
-  })
+  // var movie = 'lord of the rings'
+  // var year = ' 2003'
+  // secondFetch(movie, year);
+=========
+var watchModeApiKey = 
+var requestUrlWatchMode = 
+var watchModeAddParameters = 
+var searchButton = $('#searchBtn');
 
-  $('#reset-button').on('click', function(){
-    location.reload();
-  })
+function getWatchModeLocation () {
+    fetch('/Assets/title_id_map_watchmode.csv')
+    .then(function (response){
+        console.log(response)
+        return response.text();
+    })
+    .then(function (data) {
+        console.log(data)
+        var lines = data.split("\n")
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            console.log(lines[i]);
 
-//   first fetch movie of the night
+        }
+    })
+    
 
-
-const url = 'https://streaming-availability.p.rapidapi.com/search/title?title=Batman&country=us&show_type=movie&output_language=en&';
-const options = {
-    method: 'GET',
-    headers: {
-        'X-RapidAPI-Key': '2f43227628msh7e02f532e1891e0p188cd9jsndd7637ba78ac',
-        'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com'
-    }
-};
-
-async function apiFetch () {
-    try {
-        const response = await fetch(url, options);
-        const movies = await response.json();
-        console.log(movies.result);
-    } catch (error) {
-        console.error(error);
-    }
 }
 
-apiFetch()
-
-//     .then(function(data)){
-//       for (i = 0; i < data.movies.result.length; i++){
-//         var streamingPlatform = data.movies.resulth[i].streamingInfo.us.[i]. service;
-//     }
-// }
-
+searchButton.on("click", getWatchModeLocation)
+>>>>>>>>> Temporary merge branch 2
