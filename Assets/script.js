@@ -57,15 +57,16 @@ function secondFetch(movie){
 //   first fetch movie of the night
 
 
-async function firstFetch (movie) {
-    const url = 'https://streaming-availability.p.rapidapi.com/search/title?title=Friends&country=us&show_type=movie&output_language=en&';
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '2f43227628msh7e02f532e1891e0p188cd9jsndd7637ba78ac',
-            'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com'
-        }
-            };
+const url = 'https://streaming-availability.p.rapidapi.com/search/title?title=Batman&country=us&show_type=movie&output_language=en&';
+const options = {
+    method: 'GET',
+    headers: {
+        'X-RapidAPI-Key': '2f43227628msh7e02f532e1891e0p188cd9jsndd7637ba78ac',
+        'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com'
+    }
+};
+
+async function apiFetch () {
     try {
         const response = await fetch(url, options);
         const movies = await response.json();
@@ -75,8 +76,11 @@ async function firstFetch (movie) {
     }
 }
 
+apiFetch()
 
-
-firstFetch()
-
+//     .then(function(data)){
+//       for (i = 0; i < data.movies.result.length; i++){
+//         var streamingPlatform = data.movies.resulth[i].streamingInfo.us.[i]. service;
+//     }
+// }
 
