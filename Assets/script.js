@@ -1,4 +1,4 @@
-var searchBtn = document.getElementById('search-button')
+var searchBtn = document.getElementById('search-button');
 
 function secondFetch(movie){
     var searchUrl = 'http://www.omdbapi.com/';
@@ -11,11 +11,11 @@ function secondFetch(movie){
       return response.json();
     })
     .then(function(data) {
-      console.log(data.Search.length);
       for (i = 0; i < data.Search.length; i++){
       var title = data.Search[i].Title;
       var poster = data.Search[i].Poster;
       var year = data.Search[i].Year;
+
     // //creates poster
     var imgEl = $('<img>');
 
@@ -24,9 +24,9 @@ function secondFetch(movie){
     $('#movie-info').append(imgEl);
 
     // //creates title
-    var titleEl = $('<p>');
+    var titleEl = $('<h3>');
 
-    titleEl.text(title)
+    titleEl.text(title);
 
     $('#movie-info').append(titleEl);
 
