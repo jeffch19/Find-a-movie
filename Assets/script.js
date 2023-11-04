@@ -52,3 +52,29 @@ function secondFetch(movie){
   $('#reset-button').on('click', function(){
     location.reload();
   })
+
+  // fetch movie of the night
+
+
+function movieStreamingURL(){
+    const url = 'https://streaming-availability.p.rapidapi.com/search/title?title=Batman&country=us&show_type=movie&output_language=en&';
+  const options = {
+    method: 'GET',
+    headers: {
+        'X-RapidAPI-Key': '2f43227628msh7e02f532e1891e0p188cd9jsndd7637ba78ac',
+        'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com'
+      }
+    };
+}
+
+async function apiFirstFetch () {
+    try {
+        const response = await fetch(url, options);
+        const movies = await response.json();
+        console.log(movies.result);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+apiFirstFetch()
