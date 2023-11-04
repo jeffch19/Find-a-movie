@@ -1,7 +1,6 @@
-/* head #title { 
-  font-family: 'PF Regal Swash Pro', sans-serif;
-  color: white;
-} */
+body {
+  background-color: #41228e;
+}
 
 /* nav bar */
 #title {
@@ -12,7 +11,7 @@
   font-family: 'PF Regal Swash Pro', sans-serif;
   font-size: 72px;
   color: white;
-  background-color: #41228e;
+  /* background-color: #41228e; */
 }
 .layer {
   position: absolute;
