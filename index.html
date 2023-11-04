@@ -16,28 +16,23 @@
 
 
 <body>
-  <!-- Title bar -->
-  <header>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="title">
-        <h1>Pick A Movie</h1>
-
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
-
-      <!-- <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-          <a class="navbar-item">
-            Home
-          </a>
-        </div>
-      </div> -->
-    </nav>
-  </header>
+  <body>
+    <!-- Title bar -->
+  <div class="head">
+    <nav id="title">Pick-a-Movie</nav>
+    <div class="layer" id="l1">
+      <img src="./Assets/images/leaf-yellow.png" alt="bg-shape">
+    </div>
+    <div class="layer" id="l2">
+      <img src="./Assets/images/leaf-pink.png" alt="bg-shape">
+    </div>
+    <div class="layer" id="l3">
+      <img src="./Assets/images/page-title.png" alt="bg-shape">
+    </div>
+    <div class="layer" id="l4">
+      <img src="./Assets/images/dots-cyan.png" alt="bg-shape">
+    </div>
+  </div>
 
   <!-- Search Box -->
   <div class="main-info-box">
@@ -47,12 +42,12 @@
       so that you can see what you searched!</p>
 
     <!-- insert search bar here -- possibly in another div -- used bulma-->
-    <div class="field has-addons">
+    <div class="field is-grouped">
       <div class="control">
-        <input id="search" class="input" type="text" placeholder="Search...">
+        <input id="search" class="input is-rounded" type="text" placeholder="Search...">
       </div>
       <div class="control">
-        <a id="search-button" class="button is-info">
+        <a id="search-button" class="button is-link is-rounded">
           Search
         </a>
       </div>
@@ -61,11 +56,13 @@
 
   </div>
 
+
   <!-- movie display section -->
-  <div id="movie-info" class="display-movie-div">
-    <h3 id="movie-title">Movie/show title:</h3>
+  <div class="display-movie-div columns is-5" id="movie-info">
+    <h3 id="movie-title"><!--Movie/show title:--></h3>
     <!-- <div class="div-with-movie"></div> -->
-    <div>possibly add a row here of related movies???? we shall see</div>
+    <div class="colum is-one-quarter"><!--possibly add a row here of related movies???? we shall see--></div>
+    <!-- <div class="colum is-one-fifth">possibly add a row here of related movies???? we shall see</div> -->
   </div>
 
 
@@ -83,7 +80,7 @@
       <!-- insert search bar here -- possibly in another div -- used bulma-->
       <div class="field has-addons">
         <div class="control">
-          <a id="reset-button" class="button is-info">
+          <a id="reset-button" class="button is-link is-rounded">
             Search For Another Show/Movie?
           </a>
         </div>
