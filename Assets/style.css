@@ -1,13 +1,54 @@
-nav h1 { 
+/* head #title { 
   font-family: 'PF Regal Swash Pro', sans-serif;
-}
+  color: white;
+} */
 
 /* nav bar */
-.navbar {
+#title {
   display: flex;
-  justify-content: space-around;
+  height: 9rem;
+  justify-content: center;
+  align-items: center;
+  font-family: 'PF Regal Swash Pro', sans-serif;
   font-size: 72px;
+  color: white;
+  background-color: #41228e;
 }
+.layer {
+  position: absolute;
+  z-index: 1;
+}
+
+#l1 {
+  top: 0.8rem;
+  right: 0.2rem;
+}
+
+#l2 {
+  top: 0.8rem;
+  left: 0.2rem;
+}
+
+#l3 {
+  top: 0rem;
+  left: 19rem;
+}
+
+#l4 > img {
+  height: 1vh;
+  max-width: 100%;
+}
+
+#l4 {
+  top: 5.7rem;
+  right: 24.5rem;
+}
+
+img {
+  height: 16vh;
+  max-width: 100%;
+}
+
 
 /* div with heres how it works and description and search button */
 .main-info-box {
@@ -15,31 +56,29 @@ nav h1 {
   flex-direction: column;
   align-items: center;
   padding: 100px; 
-  background-color: antiquewhite;
+  background-color: #41228e;
 }
 /* heres how it works section */
 h2 {
   font-size: 48px;
-  
-  
+  color: white;
 }
 /* text below heres how it works */
 .description-text {
   display: flex;
-  
+  color: white;
   line-height: 2;
+  margin: 10px;
+  padding: 5vh 30vh;
 }
 
-.display-movie-div {
+/* .display-movie-div { */
+  #movie-info {
   display: flex;
-  padding: 100px;
-  flex-direction: column;
   align-items: center;
-}
-/* @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800&display=swap"); */
-@import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
+  justify-content: flex-start;
+  padding: 100px;
 
-/* .navbar.nav-bg {
-  background-color: #41228e !important;
-  padding: 15px 100px;
-} */
+}
+ 
+
