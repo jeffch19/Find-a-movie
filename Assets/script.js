@@ -52,3 +52,52 @@ function secondFetch(movie){
   $('#reset-button').on('click', function(){
     location.reload();
   })
+
+
+
+
+// fetch movie of the night
+async function apiMovieNightFetch() {
+  const urlStart = 'https://streaming-availability.p.rapidapi.com/search/title?title='
+  const searchPara = 'The%20Batman'
+  const urlEnd = '&country=us&show_type=all&output_language=en'
+  var urlMovieOfTheNight = urlStart + searchPara + urlEnd;
+  console.log(urlMovieOfTheNight)
+  const options = {
+    method: 'GET',
+    headers: {
+        'X-RapidAPI-Key': '2f43227628msh7e02f532e1891e0p188cd9jsndd7637ba78ac',
+        'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com'
+      }
+    };
+   
+    let movies;
+    
+    try {
+      const response = await fetch(urlMovieOfTheNight, options);
+      movies = await response.json();
+      console.log(movies.result);  
+    } catch (error) {
+        console.error(error);
+    } 
+
+    for (let i = 0; i < movies.result.length; i++){
+      var streamingService = movies.result[i].streamingInfo.us[i].service;
+      var moviePrice = movies.result[i].streamingInfo.us[i].price.amount;
+      var typeOfStream = movies.result[i].streamingInfo.us[i].streamingType;
+      console.log(streamingService);
+      console.log(moviePrice);
+      console.log(typeOfStream);
+      // append streaming service info to movies
+      var streamingServiceEl = $('<p>');
+      streamingServiceEl.text("Stream it on: " + streamingService)
+      $('#movie-info').append(streamingServiceEl);
+      
+      // append streaming price info to movies
+      var streamingPriceInfoEl = $('<p>');
+      streamingPriceInfoEl.text(typeOfStream + ' $' + moviePrice);
+      $('#movie-info').append(streamingPriceInfoEl);
+    }
+  }
+
+apiMovieNightFetch()
