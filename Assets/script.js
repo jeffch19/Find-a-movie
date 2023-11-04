@@ -60,7 +60,7 @@ function secondFetch(movie){
 async function apiMovieNightFetch() {
   const urlStart = 'https://streaming-availability.p.rapidapi.com/search/title?title='
   const searchPara = 'The%20Batman'
-  const urlEnd = '&country=us&show_type=movie&output_language=en'
+  const urlEnd = '&country=us&show_type=all&output_language=en'
   var urlMovieOfTheNight = urlStart + searchPara + urlEnd;
   console.log(urlMovieOfTheNight)
   const options = {
@@ -88,6 +88,15 @@ async function apiMovieNightFetch() {
       console.log(streamingService);
       console.log(moviePrice);
       console.log(typeOfStream);
+      // append streaming service info to movies
+      var streamingServiceEl = $('<p>');
+      streamingServiceEl.text("Stream it on: " + streamingService)
+      $('#movie-info').append(streamingServiceEl);
+      
+      // append streaming price info to movies
+      var streamingPriceInfoEl = $('<p>');
+      streamingPriceInfoEl.text(typeOfStream + ' $' + moviePrice);
+      $('#movie-info').append(streamingPriceInfoEl);
     }
   }
 
