@@ -53,11 +53,16 @@ function secondFetch(movie){
     location.reload();
   })
 
-  // fetch movie of the night
 
 
-function movieStreamingURL(){
-    const url = 'https://streaming-availability.p.rapidapi.com/search/title?title=Batman&country=us&show_type=movie&output_language=en&';
+
+// fetch movie of the night
+async function apiMovieNightFetch() {
+  const urlStart = 'https://streaming-availability.p.rapidapi.com/search/title?title='
+  const searchPara = 'The%20Batman'
+  const urlEnd = '&country=us&show_type=movie&output_language=en'
+  var urlMovieOfTheNight = urlStart + searchPara + urlEnd;
+  console.log(urlMovieOfTheNight)
   const options = {
     method: 'GET',
     headers: {
@@ -65,16 +70,25 @@ function movieStreamingURL(){
         'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com'
       }
     };
-}
-
-async function apiFirstFetch () {
+   
+    let movies;
+    
     try {
-        const response = await fetch(url, options);
-        const movies = await response.json();
-        console.log(movies.result);
+      const response = await fetch(urlMovieOfTheNight, options);
+      movies = await response.json();
+      console.log(movies.result);  
     } catch (error) {
         console.error(error);
-    }
-}
+    } 
 
-apiFirstFetch()
+    for (let i = 0; i < movies.result.length; i++){
+      var streamingService = movies.result[i].streamingInfo.us[i].service;
+      var moviePrice = movies.result[i].streamingInfo.us[i].price.amount;
+      var typeOfStream = movies.result[i].streamingInfo.us[i].streamingType;
+      console.log(streamingService);
+      console.log(moviePrice);
+      console.log(typeOfStream);
+    }
+  }
+
+apiMovieNightFetch()
