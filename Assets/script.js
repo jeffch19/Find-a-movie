@@ -1,7 +1,7 @@
 var searchBtn = document.getElementById('search-button');
 $('.reset-btn-div').css('display', 'none');
 
-function secondFetch(movie){
+function omdbFetch(movie){
     var searchUrl = 'http://www.omdbapi.com/';
     var apiKey = '?apikey=f0621784';
     var movieName = "&s=" + movie;
@@ -16,27 +16,74 @@ function secondFetch(movie){
       var title = data.Search[i].Title;
       var poster = data.Search[i].Poster;
       var year = data.Search[i].Year;
+      var imdbId = data.Search[i].imdbID;
+
+    var movieDiv = $('<div>');
+
+    movieDiv.attr('id', 'movie-div');
+
+    $('#movie-info').append(movieDiv);
 
     // //creates poster
     var imgEl = $('<img>');
 
     imgEl.attr('src', poster);
 
-    $('#movie-info').append(imgEl);
+    movieDiv.append(imgEl);
 
     // //creates title
     var titleEl = $('<h3>');
 
     titleEl.text(title);
 
-    $('#movie-info').append(titleEl);
+    movieDiv.append(titleEl);
 
     // //creates description
     var yearEl = $('<p>');
 
-    yearEl.text(year)
+    yearEl.text(year);
 
-    $('#movie-info').append(yearEl);
+
+    movieDiv.append(yearEl);
+
+    // creates more info button
+    var moreInfo = $('<button>');
+
+    moreInfo.attr('class', 'more-info-btn');
+
+    moreInfo.text('See more info');
+
+    moreInfo.data('imdbID', imdbId);
+
+    movieDiv.append(moreInfo);
+
+     // creates streaming options button
+    var streamingOpt = $('<button>');
+
+    streamingOpt.attr('id', 'streaming-opt-btn');
+
+    streamingOpt.text('Where to watch?');
+
+    streamingOpt.data('title', title);
+
+    streamingOpt.data('imdbID', imdbId);
+    
+    movieDiv.append(streamingOpt);
+
+
+    streamingOpt.on('click', function () {
+      // Retrieve the movie details from the data attributes
+      var title = $(this).data('title');
+      var imdbId = $(this).data('imdbID');
+    
+      // Now you can use the 'title' and 'year' variables for further processing.
+      console.log(title);
+      console.log(imdbId);
+    
+      // You can display the details in a modal, perform an AJAX request, or any other desired action here.
+      apiMovieNightFetch(imdbId);
+    });
+
       }
     })
 
@@ -46,7 +93,7 @@ function secondFetch(movie){
     $(".main-info-box").css('display', 'none');
     $('.reset-btn-div').css('display', 'flex');
       var searchValue = document.getElementById('search').value;
-      secondFetch(searchValue);
+      omdbFetch(searchValue);
   })
 
   $('#reset-button').on('click', function(){
@@ -54,15 +101,13 @@ function secondFetch(movie){
   })
 
 
-
-
 // fetch movie of the night
-async function apiMovieNightFetch() {
-  const urlStart = 'https://streaming-availability.p.rapidapi.com/search/title?title='
-  const searchPara = 'The%20Batman'
-  const urlEnd = '&country=us&show_type=all&output_language=en'
-  var urlMovieOfTheNight = urlStart + searchPara + urlEnd;
-  console.log(urlMovieOfTheNight)
+async function apiMovieNightFetch(movie) {
+  const urlStart = 'https://streaming-availability.p.rapidapi.com/get?output_language=en&imdb_id='
+  const searchPara = movie
+  // const urlEnd = '&country=us&show_type=all&output_language=en'
+  var urlMovieOfTheNight = urlStart + searchPara;
+
   const options = {
     method: 'GET',
     headers: {
@@ -81,23 +126,30 @@ async function apiMovieNightFetch() {
         console.error(error);
     } 
 
-    for (let i = 0; i < movies.result.length; i++){
-      var streamingService = movies.result[i].streamingInfo.us[i].service;
-      var moviePrice = movies.result[i].streamingInfo.us[i].price.amount;
-      var typeOfStream = movies.result[i].streamingInfo.us[i].streamingType;
-      console.log(streamingService);
-      console.log(moviePrice);
-      console.log(typeOfStream);
+    for (let i = 0; i < movies.result.streamingInfo.us.length; i++){
+      var streamingService = movies.result.streamingInfo.us[i].service;
+      var streamingLink = movies.result.streamingInfo.us[i].link;
+      var qualityType = movies.result.streamingInfo.us[i].quality;
+      if (qualityType == undefined){
+        qualityType = 'See it on the website'
+      };
+
       // append streaming service info to movies
-      var streamingServiceEl = $('<p>');
-      streamingServiceEl.text("Stream it on: " + streamingService)
-      $('#movie-info').append(streamingServiceEl);
+      var streamingDiv = $("<div>");
+      streamingDiv.attr('id', 'streaming-div');
+      $('#movie-info').append(streamingDiv);
+
+      var streamingUl = $('<ul>');
+      streamingUl.attr('id', 'stream-ul');
       
-      // append streaming price info to movies
-      var streamingPriceInfoEl = $('<p>');
-      streamingPriceInfoEl.text(typeOfStream + ' $' + moviePrice);
-      $('#movie-info').append(streamingPriceInfoEl);
+      var streamingLinkEl = $('<a>');
+      streamingLinkEl.attr('href', streamingLink);
+      streamingDiv.append(streamingLinkEl);
+
+      var streamingServiceEl = $('<li>');
+      streamingServiceEl.text("Stream it on: " + streamingService + ' Quality: ' + qualityType);
+      streamingUl.append(streamingServiceEl);
+
+      $(streamingLinkEl).append(streamingServiceEl);
     }
   }
-
-apiMovieNightFetch()
