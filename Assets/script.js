@@ -12,6 +12,7 @@ function omdbFetch(movie){
       return response.json();
     })
     .then(function(data) {
+
       for (i = 0; i < 5; i++){
       var title = data.Search[i].Title;
       var poster = data.Search[i].Poster;
@@ -31,6 +32,8 @@ function omdbFetch(movie){
 
     movieDiv.append(imgEl);
 
+    
+
     // //creates title
     var titleEl = $('<h3>');
 
@@ -42,7 +45,6 @@ function omdbFetch(movie){
     var yearEl = $('<p>');
 
     yearEl.text(year);
-
 
     movieDiv.append(yearEl);
 
@@ -64,11 +66,32 @@ function omdbFetch(movie){
           var title = $(this).data('title');
           var imdbId = $(this).data('imdbID');
 
+
       for (i = 0; i < 4; i++){
       var movieDiv = $(this).closest('.movie-div');
       movieDiv.attr('id', 'active');
       $('.movie-div').not('#active').hide();
 
+
+    // create add to watchlist button
+    var saveToWatchListBtn = $('<button>');
+
+    saveToWatchListBtn.attr('class', 'favorites-btn');
+
+    saveToWatchListBtn.text('Save to Watchlist ⭐');
+
+    movieDiv.append(saveToWatchListBtn)
+
+    
+    streamingOpt.on('click', function () {
+    
+      var title = $(this).data('title');
+      var imdbId = $(this).data('imdbID');
+    
+
+      console.log(title);
+      console.log(imdbId);
+    
       apiMovieNightFetch(imdbId);
     }
     omdbPlotFetch(imdbId);
@@ -144,6 +167,7 @@ async function apiMovieNightFetch(movie) {
   }
 
 
+
   function omdbPlotFetch(movie){
     var searchUrl = 'http://www.omdbapi.com/';
     var apiKey = '?apikey=f0621784';
@@ -165,3 +189,51 @@ async function apiMovieNightFetch(movie) {
   
       $('#movie-info').append(plotEl);
       })}
+
+
+var watchListFavorites = []
+
+if(localStorage.getItem('favoritesWatchList')) {
+  watchListFavorites = JSON.parse(localStorage.getItem('favoritesWatchList'));
+  console.log(watchListFavorites);
+  printWatchlist();
+}
+
+function printWatchlist() {
+  // cityHistoryDisplayEl.html('');
+  for (var i = 0; i < watchListFavorites.length; i++) {
+      favorite = watchListFavorites[i];
+      // console.log(city);
+      var listEl = $('<li>');
+      var listBtns = $('<button>');
+      listBtns.attr("data-movie", favorite);
+      listBtns.attr("class", "button");
+      listBtns.text(favorite);
+      cityHistoryDisplayEl.append(listEl);  
+      listEl.append(listBtns);
+  }
+}
+
+function captureFavoriteMovie(event){
+  event.preventDefault();
+  // console.log(event);
+  // console.log(event.target);
+  watchListFavorites.push(searchInput.val());
+  if (watchListFavorites.length > 20){
+    watchListFavorites.shift();
+  }
+  localStorage.setItem('favoritesWatchList', JSON.stringify(watchListFavorites));
+  printWatchlist();
+}
+
+
+function handleButtonClick(event){
+  event.preventDefault();
+  // console.log(this);
+  var movie = this.getAttribute("data-movie");
+  console.log(movie);
+    omdbFetch(movie);
+  }
+
+// not sure where.on("click", "button", handleButtonClick)
+
