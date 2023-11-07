@@ -66,6 +66,8 @@ function omdbFetch(movie){
           var title = $(this).data('title');
           var imdbId = $(this).data('imdbID');
 
+    // create add to watchlist button
+    var saveToWatchListBtn = $('<button>');
 
       for (i = 0; i < 4; i++){
       var movieDiv = $(this).closest('.movie-div');
