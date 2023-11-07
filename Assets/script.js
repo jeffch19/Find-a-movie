@@ -12,7 +12,7 @@ function omdbFetch(movie){
       return response.json();
     })
     .then(function(data) {
-      for (i = 0; i < data.Search.length; i++){
+      for (var i = 0; i < 5 && i < data.Search.length; i++){
       var title = data.Search[i].Title;
       var poster = data.Search[i].Poster;
       var year = data.Search[i].Year;
