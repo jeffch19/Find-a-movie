@@ -71,29 +71,8 @@ function omdbFetch(movie){
       var movieDiv = $(this).closest('.movie-div');
       movieDiv.attr('id', 'active');
       $('.movie-div').not('#active').hide();
-
-
-    // create add to watchlist button
-    var saveToWatchListBtn = $('<button>');
-
-    saveToWatchListBtn.attr('class', 'favorites-btn');
-
-    saveToWatchListBtn.text('Save to Watchlist ⭐');
-
-    movieDiv.append(saveToWatchListBtn)
-
-    
-    streamingOpt.on('click', function () {
-    
-      var title = $(this).data('title');
-      var imdbId = $(this).data('imdbID');
-    
-
-      console.log(title);
-      console.log(imdbId);
-    
-      apiMovieNightFetch(imdbId);
-    }
+      apiMovieNightFetch(imdbId)
+      }
     omdbPlotFetch(imdbId);
   })
 
@@ -101,6 +80,7 @@ function omdbFetch(movie){
     })
 
   };
+
 
   searchBtn.addEventListener('click', function(){
     $(".main-info-box").css('display', 'none');
@@ -191,6 +171,14 @@ async function apiMovieNightFetch(movie) {
       })}
 
 
+      var saveToWatchListBtn = $('<button>');
+
+      saveToWatchListBtn.attr('class', 'favorites-btn');
+    
+      saveToWatchListBtn.text('Save to Watchlist ⭐');
+    
+      movieDiv.append(saveToWatchListBtn)
+
 var watchListFavorites = []
 
 if(localStorage.getItem('favoritesWatchList')) {
@@ -235,5 +223,5 @@ function handleButtonClick(event){
     omdbFetch(movie);
   }
 
-// not sure where.on("click", "button", handleButtonClick)
+// // not sure where.on("click", "button", handleButtonClick)
 
