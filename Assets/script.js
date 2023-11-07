@@ -31,6 +31,8 @@ function omdbFetch(movie){
 
     movieDiv.append(imgEl);
 
+    
+
     // //creates title
     var titleEl = $('<h3>');
 
@@ -42,7 +44,6 @@ function omdbFetch(movie){
     var yearEl = $('<p>');
 
     yearEl.text(year);
-
 
     movieDiv.append(yearEl);
 
@@ -70,7 +71,16 @@ function omdbFetch(movie){
     
     movieDiv.append(streamingOpt);
 
+    // create add to watchlist button
+    var saveToWatchListBtn = $('<button>');
 
+    saveToWatchListBtn.attr('class', 'favorites-btn');
+
+    saveToWatchListBtn.text('Save to Watchlist ⭐');
+
+    movieDiv.append(saveToWatchListBtn)
+
+    
     streamingOpt.on('click', function () {
       // Retrieve the movie details from the data attributes
       var title = $(this).data('title');
@@ -153,3 +163,52 @@ async function apiMovieNightFetch(movie) {
       $(streamingLinkEl).append(streamingServiceEl);
     }
   }
+
+// local storage - save movie to watchlist
+
+var watchListFavorites = []
+
+if(localStorage.getItem('favoritesWatchList')) {
+  watchListFavorites = JSON.parse(localStorage.getItem('favoritesWatchList'));
+  console.log(watchListFavorites);
+  printWatchlist();
+}
+
+function printWatchlist() {
+  // cityHistoryDisplayEl.html('');
+  for (var i = 0; i < watchListFavorites.length; i++) {
+      favorite = watchListFavorites[i];
+      // console.log(city);
+      var listEl = $('<li>');
+      var listBtns = $('<button>');
+      listBtns.attr("data-movie", favorite);
+      listBtns.attr("class", "button");
+      listBtns.text(favorite);
+      cityHistoryDisplayEl.append(listEl);  
+      listEl.append(listBtns);
+  }
+}
+
+function captureFavoriteMovie(event){
+  event.preventDefault();
+  // console.log(event);
+  // console.log(event.target);
+  watchListFavorites.push(searchInput.val());
+  if (watchListFavorites.length > 20){
+    watchListFavorites.shift();
+  }
+  localStorage.setItem('favoritesWatchList', JSON.stringify(watchListFavorites));
+  printWatchlist();
+}
+
+
+function handleButtonClick(event){
+  event.preventDefault();
+  // console.log(this);
+  var movie = this.getAttribute("data-movie");
+  console.log(movie);
+    omdbFetch(movie);
+  }
+
+// not sure where.on("click", "button", handleButtonClick)
+
