@@ -9,6 +9,9 @@ body {
   height: 20.2vh;
 }
 
+body { 
+  height: 100vh;
+}
 /* nav bar */
 #title {
   display: flex;
@@ -110,4 +113,5 @@ h2 {
 
 .movie-div {
   padding: 10px;
+  width: 20%;
 }
