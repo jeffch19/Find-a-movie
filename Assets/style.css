@@ -82,7 +82,7 @@ h2 {
   background-color: #41228e;
 }
 
-/* .display-movie-div { */
+/* .display-movie-div  */
   #movie-info {
     display: flex;
     align-items: flex-start;
@@ -97,9 +97,9 @@ h2 {
     padding: 28px;
     margin: 26px;
   }
-  .main-info-box {
+  /* .main-info-box {
     background-color: rgb(123, 202, 233);
-  }
+  } */
 }
 @media screen and (max-width: 811px) {
   #l3 {
