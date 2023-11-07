@@ -12,7 +12,8 @@ function omdbFetch(movie){
       return response.json();
     })
     .then(function(data) {
-      for (var i = 0; i < 5 && i < data.Search.length; i++){
+
+      for (i = 0; i < 5; i++){
       var title = data.Search[i].Title;
       var poster = data.Search[i].Poster;
       var year = data.Search[i].Year;
@@ -20,7 +21,7 @@ function omdbFetch(movie){
 
     var movieDiv = $('<div>');
 
-    movieDiv.attr('id', 'movie-div');
+    movieDiv.attr('class', 'movie-div');
 
     $('#movie-info').append(movieDiv);
 
@@ -58,18 +59,19 @@ function omdbFetch(movie){
 
     movieDiv.append(moreInfo);
 
-     // creates streaming options button
-    var streamingOpt = $('<button>');
-
-    streamingOpt.attr('id', 'streaming-opt-btn');
-
-    streamingOpt.text('Where to watch?');
-
-    streamingOpt.data('title', title);
-
-    streamingOpt.data('imdbID', imdbId);
     
-    movieDiv.append(streamingOpt);
+    moreInfo.on('click', function () {
+      
+      $(".more-info-btn").css('display', 'none');
+          var title = $(this).data('title');
+          var imdbId = $(this).data('imdbID');
+
+
+      for (i = 0; i < 4; i++){
+      var movieDiv = $(this).closest('.movie-div');
+      movieDiv.attr('id', 'active');
+      $('.movie-div').not('#active').hide();
+
 
     // create add to watchlist button
     var saveToWatchListBtn = $('<button>');
@@ -82,17 +84,18 @@ function omdbFetch(movie){
 
     
     streamingOpt.on('click', function () {
-      // Retrieve the movie details from the data attributes
+    
       var title = $(this).data('title');
       var imdbId = $(this).data('imdbID');
     
-      // Now you can use the 'title' and 'year' variables for further processing.
+
       console.log(title);
       console.log(imdbId);
     
-      // You can display the details in a modal, perform an AJAX request, or any other desired action here.
       apiMovieNightFetch(imdbId);
-    });
+    }
+    omdbPlotFetch(imdbId);
+  })
 
       }
     })
@@ -115,7 +118,6 @@ function omdbFetch(movie){
 async function apiMovieNightFetch(movie) {
   const urlStart = 'https://streaming-availability.p.rapidapi.com/get?output_language=en&imdb_id='
   const searchPara = movie
-  // const urlEnd = '&country=us&show_type=all&output_language=en'
   var urlMovieOfTheNight = urlStart + searchPara;
 
   const options = {
@@ -164,7 +166,30 @@ async function apiMovieNightFetch(movie) {
     }
   }
 
-// local storage - save movie to watchlist
+
+
+  function omdbPlotFetch(movie){
+    var searchUrl = 'http://www.omdbapi.com/';
+    var apiKey = '?apikey=f0621784';
+    var movieName = "&i=" + movie;
+    var addParam = '&plot=full'
+    var url = searchUrl + apiKey + addParam + movieName;
+    console.log(url);
+    fetch(url)
+    .then(function(response){
+      return response.json();
+    })
+    .then(function(data) {
+      console.log(data)
+      var plot = data.Plot;
+      var plotEl = $('<p>');
+      console.log(plot)
+
+      plotEl.text(plot);
+  
+      $('#movie-info').append(plotEl);
+      })}
+
 
 var watchListFavorites = []
 
