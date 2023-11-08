@@ -178,3 +178,12 @@ li {
 .more-info-btn:hover {
   cursor: pointer;
 }
+
+.dropdown-content {
+  background-color: #41228e;
+}
+
+.movie-div > p {
+  margin-left: 100px;
+  margin-right: 100px;
+}
