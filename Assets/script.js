@@ -1,5 +1,6 @@
 var searchBtn = document.getElementById('search-button');
 $('.reset-btn-div').css('display', 'none');
+var savedWatchlistFullList = $('#full-watchlist')
 
 function omdbFetch(movie) {
   var searchUrl = 'http://www.omdbapi.com/';
@@ -12,6 +13,7 @@ function omdbFetch(movie) {
       return response.json();
     })
     .then(function (data) {
+
       for (i = 0; i < 5; i++) {
         var title = data.Search[i].Title;
         var poster = data.Search[i].Poster;
@@ -31,8 +33,6 @@ function omdbFetch(movie) {
 
         movieDiv.append(imgEl);
 
-
-
         // //creates title
         var titleEl = $('<h3>');
 
@@ -47,6 +47,15 @@ function omdbFetch(movie) {
 
         movieDiv.append(yearEl);
 
+        // save to watchlist button
+        var saveToWatchListBtn = $('<button>');
+        saveToWatchListBtn.attr('data-movie', title);
+        saveToWatchListBtn.attr('data-id', imdbId);
+        saveToWatchListBtn.text('Save to Watchlist ⭐');
+        movieDiv.append(saveToWatchListBtn);
+
+        saveToWatchListBtn.on('click', captureFavoriteMovie);
+
         // creates more info button
         var moreInfo = $('<button>');
 
@@ -59,6 +68,7 @@ function omdbFetch(movie) {
         movieDiv.append(moreInfo);
 
 
+
         moreInfo.on('click', function () {
 
           $(".more-info-btn").css('display', 'none');
@@ -69,36 +79,17 @@ function omdbFetch(movie) {
             var movieDiv = $(this).closest('.movie-div');
             movieDiv.attr('id', 'active');
             $('.movie-div').not('#active').hide();
+            apiMovieNightFetch(imdbId)
+          }
+          omdbPlotFetch(imdbId);
+        })
 
-            // create add to watchlist button
-            var saveToWatchListBtn = $('<button>');
-
-            saveToWatchListBtn.attr('class', 'favorites-btn');
-
-            saveToWatchListBtn.text('Save to Watchlist ⭐');
-
-            movieDiv.append(saveToWatchListBtn)
-
-
-            streamingOpt.on('click', function () {
-              // Retrieve the movie details from the data attributes
-              var title = $(this).data('title');
-              var imdbId = $(this).data('imdbID');
-
-              // Now you can use the 'title' and 'year' variables for further processing.
-              console.log(title);
-              console.log(imdbId);
-
-              // You can display the details in a modal, perform an AJAX request, or any other desired action here.
-              apiMovieNightFetch(imdbId);
-            })
-            omdbPlotFetch(imdbId);
-      }})
-      
       }
     })
 
 };
+
+
 
 searchBtn.addEventListener('click', function () {
   $(".main-info-box").css('display', 'none');
@@ -161,8 +152,11 @@ async function apiMovieNightFetch(movie) {
     streamingUl.append(streamingServiceEl);
 
     $(streamingLinkEl).append(streamingServiceEl);
+
   }
 }
+
+
 
 
 function omdbPlotFetch(movie) {
@@ -187,9 +181,10 @@ function omdbPlotFetch(movie) {
       $('#movie-info').append(plotEl);
     })
 }
-// local storage - save movie to watchlist
 
-var watchListFavorites = []
+
+
+
 
 if (localStorage.getItem('favoritesWatchList')) {
   watchListFavorites = JSON.parse(localStorage.getItem('favoritesWatchList'));
@@ -198,25 +193,35 @@ if (localStorage.getItem('favoritesWatchList')) {
 }
 
 function printWatchlist() {
-  // cityHistoryDisplayEl.html('');
+  savedWatchlistFullList.html("");
   for (var i = 0; i < watchListFavorites.length; i++) {
-    favorite = watchListFavorites[i];
-    // console.log(city);
+    favorite = watchListFavorites[i].split(',')[0];
+    var movieId = watchListFavorites[i].split(',')[1];
+    console.log(favorite)
     var listEl = $('<li>');
     var listBtns = $('<button>');
     listBtns.attr("data-movie", favorite);
+    listBtns.attr('data-id', movieId)
     listBtns.attr("class", "button");
     listBtns.text(favorite);
-    cityHistoryDisplayEl.append(listEl);
+    savedWatchlistFullList.append(listEl);
     listEl.append(listBtns);
+    listBtns.on('click', handleButtonClick)
   }
 }
 
 function captureFavoriteMovie(event) {
   event.preventDefault();
+  watchListFavorites = JSON.parse(localStorage.getItem('favoritesWatchList'));
+  if (!watchListFavorites) {
+    watchListFavorites = [];
+  }
+  var movieTitle = event.target.dataset.movie;
+  var movieImbdId = event.target.dataset.id;
+  var movieData = `${movieTitle}, ${movieImbdId}`
   // console.log(event);
   // console.log(event.target);
-  watchListFavorites.push(searchInput.val());
+  watchListFavorites.push(movieData);
   if (watchListFavorites.length > 20) {
     watchListFavorites.shift();
   }
@@ -228,9 +233,12 @@ function captureFavoriteMovie(event) {
 function handleButtonClick(event) {
   event.preventDefault();
   // console.log(this);
-  var movie = this.getAttribute("data-movie");
-  console.log(movie);
-  omdbFetch(movie);
+  var movie = event.target.dataset.movie;
+  var imdbID = event.target.dataset.id;
+  console.log(imdbID);
+  // omdbFetch(imdbID);
+  $('#movie-info').empty()
+  omdbPlotFetch(imdbID);
+  apiMovieNightFetch(imdbID);
+  
 }
-
-// not sure where.on("click", "button", handleButtonClick)
