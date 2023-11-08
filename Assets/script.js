@@ -79,8 +79,8 @@ function omdbFetch(movie) {
             var movieDiv = $(this).closest('.movie-div');
             movieDiv.attr('id', 'active');
             $('.movie-div').not('#active').hide();
-            apiMovieNightFetch(imdbId)
           }
+          apiMovieNightFetch(imdbId);
           omdbPlotFetch(imdbId);
         })
 
@@ -127,33 +127,37 @@ async function apiMovieNightFetch(movie) {
     console.error(error);
   }
 
+  // Append streaming service info to movies
+  var streamingDiv = $("<div>");
+  streamingDiv.attr('id', 'streaming-div');
+  $('#movie-info').append(streamingDiv);
+
+
   for (let i = 0; i < movies.result.streamingInfo.us.length; i++) {
     var streamingService = movies.result.streamingInfo.us[i].service;
     var streamingLink = movies.result.streamingInfo.us[i].link;
     var qualityType = movies.result.streamingInfo.us[i].quality;
-    if (qualityType == undefined) {
-      qualityType = 'See it on the website'
-    };
-
-    // append streaming service info to movies
-    var streamingDiv = $("<div>");
-    streamingDiv.attr('id', 'streaming-div');
-    $('#movie-info').append(streamingDiv);
+    var streamTypeBuy = movies.result.streamingInfo.us[i].streamingType;
+    var streamPriceAmount = movies.result.streamingInfo.us[i].price ? movies.result.streamingInfo.us[i].price.amount : null;
+    if (!qualityType) {
+      qualityType = 'See it on the website';
+    }
 
     var streamingUl = $('<ul>');
     streamingUl.attr('id', 'stream-ul');
+    streamingDiv.append(streamingUl);
 
     var streamingLinkEl = $('<a>');
     streamingLinkEl.attr('href', streamingLink);
-    streamingDiv.append(streamingLinkEl);
+    streamingLinkEl.text(" - Streaming Link");
 
     var streamingServiceEl = $('<li>');
-    streamingServiceEl.text("Stream it on: " + streamingService + ' Quality: ' + qualityType);
+    streamingServiceEl.text("Stream it on: " + streamingService + ' - Quality type: ' + qualityType + ' - ' + streamTypeBuy + ' - ' + (streamPriceAmount !== null ? '$' + streamPriceAmount : 'See it on the website'));
+
+    
     streamingUl.append(streamingServiceEl);
-
-    $(streamingLinkEl).append(streamingServiceEl);
-
-  }
+    streamingUl.append(streamingLinkEl);
+  };
 }
 
 
@@ -229,16 +233,74 @@ function captureFavoriteMovie(event) {
   printWatchlist();
 }
 
-
 function handleButtonClick(event) {
   event.preventDefault();
   // console.log(this);
-  var movie = event.target.dataset.movie;
+  var movieBtn = event.target.dataset.movie;
   var imdbID = event.target.dataset.id;
   console.log(imdbID);
   // omdbFetch(imdbID);
   $('#movie-info').empty()
+  omdbFetchAgainFullScreen(movieBtn);
   omdbPlotFetch(imdbID);
   apiMovieNightFetch(imdbID);
-  
+
+}
+
+// reshow movie info on one page after clicking title button from saved watchlist 
+function omdbFetchAgainFullScreen(movie) {
+  var searchUrl = 'http://www.omdbapi.com/';
+  var apiKey = '?apikey=f0621784';
+  var movieName = "&s=" + movie;
+  var url = searchUrl + apiKey + movieName;
+  console.log(url);
+  fetch(url)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+
+      for (i = 0; i < 1; i++) {
+        var title = data.Search[i].Title;
+        var poster = data.Search[i].Poster;
+        var year = data.Search[i].Year;
+        var imdbId = data.Search[i].imdbID;
+
+        var movieDiv = $('<div>');
+
+        movieDiv.attr('class', 'movie-div');
+
+        $('#movie-info').append(movieDiv);
+
+        // //creates poster
+        var imgEl = $('<img>');
+
+        imgEl.attr('src', poster);
+
+        movieDiv.append(imgEl);
+
+        // //creates title
+        var titleEl = $('<h3>');
+
+        titleEl.text(title);
+
+        movieDiv.append(titleEl);
+
+        // //creates description
+        var yearEl = $('<p>');
+
+        yearEl.text(year);
+
+        movieDiv.append(yearEl);
+
+        // save to watchlist button
+        var saveToWatchListBtn = $('<button>');
+        saveToWatchListBtn.attr('data-movie', title);
+        saveToWatchListBtn.attr('data-id', imdbId);
+        saveToWatchListBtn.text('Save to Watchlist ⭐');
+        movieDiv.append(saveToWatchListBtn);
+
+        saveToWatchListBtn.on('click', captureFavoriteMovie);
+      }
+    })
 }
