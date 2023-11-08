@@ -206,7 +206,7 @@ function printWatchlist() {
     listBtns.text(favorite);
     savedWatchlistFullList.append(listEl);
     listEl.append(listBtns);
-    savedWatchlistFullList.on('click', handleButtonClick)
+    listBtns.on('click', handleButtonClick)
   }
 }
 
@@ -235,7 +235,11 @@ function handleButtonClick(event) {
   // console.log(this);
   var movie = event.target.dataset.movie;
   var imdbID = event.target.dataset.id;
-  console.log(movie);
-  omdbFetch(imdbID);
+  console.log(imdbID);
+  // omdbFetch(imdbID);
+  $('#movie-info').empty()
+  omdbPlotFetch(imdbID);
+  apiMovieNightFetch(imdbID);
+  
 }
 
