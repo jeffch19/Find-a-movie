@@ -21,7 +21,6 @@ body {
   height: 9rem;
   font-family: 'PF Regal Swash Pro', sans-serif;
   font-size: 72px;
-  color: white;
 }
 
 /* Images layout on the page */
@@ -53,7 +52,7 @@ body {
 
 #l4 {
   top: 5.7rem;
-  right: 24.5rem;
+  right: 29%;
 }
 
 #l5 {
@@ -76,6 +75,7 @@ img {
   align-items: center;
   padding: 100px;
   background-color: #41228e;
+  height: 100vh;
 }
 
 /* heres how it works section */
@@ -97,17 +97,22 @@ h2 {
 /* .display-movie-div { */
 #movie-info {
   display: flex;
+  justify-content: center;
   padding: 100px;
-  /* color: white; */
   background-color: white;
-  justify-content: space-evenly;
 }
 
 .movie-div {
+  display: flex;
   padding: 10px;
   width: 20%;
+  flex-direction: column;
+  align-items: center;
 }
 
+li {
+  margin: 0.3rem;
+}
 
 @media screen and (max-width: 996px) {
   .description-text {

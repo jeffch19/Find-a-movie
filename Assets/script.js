@@ -304,3 +304,9 @@ function omdbFetchAgainFullScreen(movie) {
       }
     })
 }
+
+$(document).ready(function() {
+  $(".dropdown-trigger").click(function() {
+    $(".dropdown").toggleClass("is-active");
+  });
+});
