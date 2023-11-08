@@ -19,6 +19,13 @@ deployed link: https://jeffch19.github.io/Find-a-movie/
 * Bogdan Tkachuk - https://github.com/aldu1n
 * Jeffrey Cummings -  https://github.com/jeffch19 
 
+## Technologies Used
+* HTML
+* Standard CSS with Bulma as well
+* Javascript
+* JQuery
+* Third Party-APIs
+
 
 ## License
 
