@@ -1,99 +1,115 @@
 var searchBtn = document.getElementById('search-button');
 $('.reset-btn-div').css('display', 'none');
 
-function omdbFetch(movie){
-    var searchUrl = 'http://www.omdbapi.com/';
-    var apiKey = '?apikey=f0621784';
-    var movieName = "&s=" + movie;
-    var url = searchUrl + apiKey + movieName;
-    console.log(url);
-    fetch(url)
-    .then(function(response){
+function omdbFetch(movie) {
+  var searchUrl = 'http://www.omdbapi.com/';
+  var apiKey = '?apikey=f0621784';
+  var movieName = "&s=" + movie;
+  var url = searchUrl + apiKey + movieName;
+  console.log(url);
+  fetch(url)
+    .then(function (response) {
       return response.json();
     })
-    .then(function(data) {
+    .then(function (data) {
+      for (i = 0; i < 5; i++) {
+        var title = data.Search[i].Title;
+        var poster = data.Search[i].Poster;
+        var year = data.Search[i].Year;
+        var imdbId = data.Search[i].imdbID;
 
-      for (i = 0; i < 5; i++){
-      var title = data.Search[i].Title;
-      var poster = data.Search[i].Poster;
-      var year = data.Search[i].Year;
-      var imdbId = data.Search[i].imdbID;
+        var movieDiv = $('<div>');
 
-    var movieDiv = $('<div>');
+        movieDiv.attr('class', 'movie-div');
 
-    movieDiv.attr('class', 'movie-div');
+        $('#movie-info').append(movieDiv);
 
-    $('#movie-info').append(movieDiv);
+        // //creates poster
+        var imgEl = $('<img>');
 
-    // //creates poster
-    var imgEl = $('<img>');
+        imgEl.attr('src', poster);
 
-    imgEl.attr('src', poster);
+        movieDiv.append(imgEl);
 
-    movieDiv.append(imgEl);
 
-    
 
-    // //creates title
-    var titleEl = $('<h3>');
+        // //creates title
+        var titleEl = $('<h3>');
 
-    titleEl.text(title);
+        titleEl.text(title);
 
-    movieDiv.append(titleEl);
+        movieDiv.append(titleEl);
 
-    // //creates description
-    var yearEl = $('<p>');
+        // //creates description
+        var yearEl = $('<p>');
 
-    yearEl.text(year);
+        yearEl.text(year);
 
-    movieDiv.append(yearEl);
+        movieDiv.append(yearEl);
 
-    // creates more info button
-    var moreInfo = $('<button>');
+        // creates more info button
+        var moreInfo = $('<button>');
 
-    moreInfo.attr('class', 'more-info-btn');
+        moreInfo.attr('class', 'more-info-btn');
 
-    moreInfo.text('See more info');
+        moreInfo.text('See more info');
 
-    moreInfo.data('imdbID', imdbId);
+        moreInfo.data('imdbID', imdbId);
 
-    movieDiv.append(moreInfo);
+        movieDiv.append(moreInfo);
 
-    
-    moreInfo.on('click', function () {
-      
-      $(".more-info-btn").css('display', 'none');
+
+        moreInfo.on('click', function () {
+
+          $(".more-info-btn").css('display', 'none');
           var title = $(this).data('title');
           var imdbId = $(this).data('imdbID');
 
-    // create add to watchlist button
-    var saveToWatchListBtn = $('<button>');
+          for (i = 0; i < 4; i++) {
+            var movieDiv = $(this).closest('.movie-div');
+            movieDiv.attr('id', 'active');
+            $('.movie-div').not('#active').hide();
 
-      for (i = 0; i < 4; i++){
-      var movieDiv = $(this).closest('.movie-div');
-      movieDiv.attr('id', 'active');
-      $('.movie-div').not('#active').hide();
-      apiMovieNightFetch(imdbId)
-      }
-    omdbPlotFetch(imdbId);
-  })
+            // create add to watchlist button
+            var saveToWatchListBtn = $('<button>');
 
+            saveToWatchListBtn.attr('class', 'favorites-btn');
+
+            saveToWatchListBtn.text('Save to Watchlist ⭐');
+
+            movieDiv.append(saveToWatchListBtn)
+
+
+            streamingOpt.on('click', function () {
+              // Retrieve the movie details from the data attributes
+              var title = $(this).data('title');
+              var imdbId = $(this).data('imdbID');
+
+              // Now you can use the 'title' and 'year' variables for further processing.
+              console.log(title);
+              console.log(imdbId);
+
+              // You can display the details in a modal, perform an AJAX request, or any other desired action here.
+              apiMovieNightFetch(imdbId);
+            })
+            omdbPlotFetch(imdbId);
+      }})
+      
       }
     })
 
-  };
+};
 
+searchBtn.addEventListener('click', function () {
+  $(".main-info-box").css('display', 'none');
+  $('.reset-btn-div').css('display', 'flex');
+  var searchValue = document.getElementById('search').value;
+  omdbFetch(searchValue);
+})
 
-  searchBtn.addEventListener('click', function(){
-    $(".main-info-box").css('display', 'none');
-    $('.reset-btn-div').css('display', 'flex');
-      var searchValue = document.getElementById('search').value;
-      omdbFetch(searchValue);
-  })
-
-  $('#reset-button').on('click', function(){
-    location.reload();
-  })
+$('#reset-button').on('click', function () {
+  location.reload();
+})
 
 
 // fetch movie of the night
@@ -105,85 +121,77 @@ async function apiMovieNightFetch(movie) {
   const options = {
     method: 'GET',
     headers: {
-        'X-RapidAPI-Key': '2f43227628msh7e02f532e1891e0p188cd9jsndd7637ba78ac',
-        'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com'
-      }
-    };
-   
-    let movies;
-    
-    try {
-      const response = await fetch(urlMovieOfTheNight, options);
-      movies = await response.json();
-      console.log(movies.result);  
-    } catch (error) {
-        console.error(error);
-    } 
-
-    for (let i = 0; i < movies.result.streamingInfo.us.length; i++){
-      var streamingService = movies.result.streamingInfo.us[i].service;
-      var streamingLink = movies.result.streamingInfo.us[i].link;
-      var qualityType = movies.result.streamingInfo.us[i].quality;
-      if (qualityType == undefined){
-        qualityType = 'See it on the website'
-      };
-
-      // append streaming service info to movies
-      var streamingDiv = $("<div>");
-      streamingDiv.attr('id', 'streaming-div');
-      $('#movie-info').append(streamingDiv);
-
-      var streamingUl = $('<ul>');
-      streamingUl.attr('id', 'stream-ul');
-      
-      var streamingLinkEl = $('<a>');
-      streamingLinkEl.attr('href', streamingLink);
-      streamingDiv.append(streamingLinkEl);
-
-      var streamingServiceEl = $('<li>');
-      streamingServiceEl.text("Stream it on: " + streamingService + ' Quality: ' + qualityType);
-      streamingUl.append(streamingServiceEl);
-
-      $(streamingLinkEl).append(streamingServiceEl);
+      'X-RapidAPI-Key': '2f43227628msh7e02f532e1891e0p188cd9jsndd7637ba78ac',
+      'X-RapidAPI-Host': 'streaming-availability.p.rapidapi.com'
     }
+  };
+
+  let movies;
+
+  try {
+    const response = await fetch(urlMovieOfTheNight, options);
+    movies = await response.json();
+    console.log(movies.result);
+  } catch (error) {
+    console.error(error);
   }
 
+  for (let i = 0; i < movies.result.streamingInfo.us.length; i++) {
+    var streamingService = movies.result.streamingInfo.us[i].service;
+    var streamingLink = movies.result.streamingInfo.us[i].link;
+    var qualityType = movies.result.streamingInfo.us[i].quality;
+    if (qualityType == undefined) {
+      qualityType = 'See it on the website'
+    };
+
+    // append streaming service info to movies
+    var streamingDiv = $("<div>");
+    streamingDiv.attr('id', 'streaming-div');
+    $('#movie-info').append(streamingDiv);
+
+    var streamingUl = $('<ul>');
+    streamingUl.attr('id', 'stream-ul');
+
+    var streamingLinkEl = $('<a>');
+    streamingLinkEl.attr('href', streamingLink);
+    streamingDiv.append(streamingLinkEl);
+
+    var streamingServiceEl = $('<li>');
+    streamingServiceEl.text("Stream it on: " + streamingService + ' Quality: ' + qualityType);
+    streamingUl.append(streamingServiceEl);
+
+    $(streamingLinkEl).append(streamingServiceEl);
+  }
+}
 
 
-  function omdbPlotFetch(movie){
-    var searchUrl = 'http://www.omdbapi.com/';
-    var apiKey = '?apikey=f0621784';
-    var movieName = "&i=" + movie;
-    var addParam = '&plot=full'
-    var url = searchUrl + apiKey + addParam + movieName;
-    console.log(url);
-    fetch(url)
-    .then(function(response){
+function omdbPlotFetch(movie) {
+  var searchUrl = 'http://www.omdbapi.com/';
+  var apiKey = '?apikey=f0621784';
+  var movieName = "&i=" + movie;
+  var addParam = '&plot=full'
+  var url = searchUrl + apiKey + addParam + movieName;
+  console.log(url);
+  fetch(url)
+    .then(function (response) {
       return response.json();
     })
-    .then(function(data) {
+    .then(function (data) {
       console.log(data)
       var plot = data.Plot;
       var plotEl = $('<p>');
       console.log(plot)
 
       plotEl.text(plot);
-  
+
       $('#movie-info').append(plotEl);
-      })}
-
-
-      var saveToWatchListBtn = $('<button>');
-
-      saveToWatchListBtn.attr('class', 'favorites-btn');
-    
-      saveToWatchListBtn.text('Save to Watchlist ⭐');
-    
-      movieDiv.append(saveToWatchListBtn)
+    })
+}
+// local storage - save movie to watchlist
 
 var watchListFavorites = []
 
-if(localStorage.getItem('favoritesWatchList')) {
+if (localStorage.getItem('favoritesWatchList')) {
   watchListFavorites = JSON.parse(localStorage.getItem('favoritesWatchList'));
   console.log(watchListFavorites);
   printWatchlist();
@@ -192,24 +200,24 @@ if(localStorage.getItem('favoritesWatchList')) {
 function printWatchlist() {
   // cityHistoryDisplayEl.html('');
   for (var i = 0; i < watchListFavorites.length; i++) {
-      favorite = watchListFavorites[i];
-      // console.log(city);
-      var listEl = $('<li>');
-      var listBtns = $('<button>');
-      listBtns.attr("data-movie", favorite);
-      listBtns.attr("class", "button");
-      listBtns.text(favorite);
-      cityHistoryDisplayEl.append(listEl);  
-      listEl.append(listBtns);
+    favorite = watchListFavorites[i];
+    // console.log(city);
+    var listEl = $('<li>');
+    var listBtns = $('<button>');
+    listBtns.attr("data-movie", favorite);
+    listBtns.attr("class", "button");
+    listBtns.text(favorite);
+    cityHistoryDisplayEl.append(listEl);
+    listEl.append(listBtns);
   }
 }
 
-function captureFavoriteMovie(event){
+function captureFavoriteMovie(event) {
   event.preventDefault();
   // console.log(event);
   // console.log(event.target);
   watchListFavorites.push(searchInput.val());
-  if (watchListFavorites.length > 20){
+  if (watchListFavorites.length > 20) {
     watchListFavorites.shift();
   }
   localStorage.setItem('favoritesWatchList', JSON.stringify(watchListFavorites));
@@ -217,12 +225,12 @@ function captureFavoriteMovie(event){
 }
 
 
-function handleButtonClick(event){
+function handleButtonClick(event) {
   event.preventDefault();
   // console.log(this);
   var movie = this.getAttribute("data-movie");
   console.log(movie);
-    omdbFetch(movie);
-  }
+  omdbFetch(movie);
+}
 
-// // not sure where.on("click", "button", handleButtonClick)
+// not sure where.on("click", "button", handleButtonClick)
