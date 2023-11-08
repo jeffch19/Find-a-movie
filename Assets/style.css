@@ -1,7 +1,6 @@
-/* head #title { 
-  font-family: 'PF Regal Swash Pro', sans-serif;
-  color: white;
-} */
+body {
+  background-color: #41228e;
+}
 
 /* nav bar */
 #title {
@@ -12,7 +11,7 @@
   font-family: 'PF Regal Swash Pro', sans-serif;
   font-size: 72px;
   color: white;
-  background-color: #41228e;
+  /* background-color: #41228e; */
 }
 .layer {
   position: absolute;
@@ -74,14 +73,35 @@ h2 {
 
 /* .display-movie-div { */
   #movie-info {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 100px;
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+    padding: 100px;
+    background-color: white;
+  }
+  
+  .movie-div {
+    flex-basis: calc(20% - 10px); /* Adjust the percentage as needed */
+    margin: 5px; 
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h3, p {
+    margin: 0; 
+    text-align: center;
+  }
+
+.more-info-btn {
+  padding: 2px;
+  color: white;
+  background-color: #41228e;
+  height: 45px;
 
 }
- 
 
-.movie-div {
-  padding: 10px;
+.more-info-btn:hover {
+  cursor: pointer;
 }
