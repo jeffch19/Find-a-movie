@@ -80,8 +80,8 @@ function omdbFetch(movie) {
             movieDiv.attr('id', 'active');
             $('.movie-div').not('#active').hide();
           }
-          apiMovieNightFetch(imdbId);
           omdbPlotFetch(imdbId);
+          apiMovieNightFetch(imdbId);
         })
 
       }
