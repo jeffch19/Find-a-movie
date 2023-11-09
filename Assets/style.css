@@ -110,6 +110,12 @@ h2 {
   align-items: center;
 }
 
+.movie-div > button {
+  background-color: #41228e;
+  color: white;
+}
+
+
 li {
   margin: 0.3rem;
 }
