@@ -113,8 +113,14 @@ h2 {
 .movie-div > button {
   background-color: #41228e;
   color: white;
+  opacity: 0.6;
+  transition: 0.3s;
 }
 
+.movie-div > button:hover {
+  opacity: 1;
+  cursor: pointer;
+}
 
 li {
   margin: 0.3rem;
