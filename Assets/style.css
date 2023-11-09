@@ -202,7 +202,13 @@ li {
   background-color: #41228e;
 }
 
-.movie-div > p {
-  margin-left: 100px;
-  margin-right: 100px;
+#streaming-div {
+  display: flex;
+  margin: 3rem;
+}
+
+#streaming-div > ul {
+  margin: 1rem;
+  width: 9rem;
+  border: #41228e 1px solid;
 }
