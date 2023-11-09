@@ -1,14 +1,12 @@
 body {
   background-color: #41228e;
+  height: 100vh;
 }
 
 /* Head portion of the title */
 .head {
   height: 20.2vh;
-}
-
-body {
-  height: 100vh;
+  font-family: 'PF Regal Swash Pro', sans-serif;
 }
 
 /* nav bar */
@@ -29,7 +27,7 @@ body {
   z-index: 1;
 }
 
-/* Each img has own desginated section */
+/* Each img has own designated section */
 #l1 {
   top: 0.8rem;
   right: 0.2rem;
@@ -137,6 +135,7 @@ li {
   }
 }
 
+
 @media screen and (max-width: 811px) {
   #l3 {
     display: none;
@@ -145,7 +144,6 @@ li {
     padding: 100px;
     background-color: white;
   }
-
 
   .movie-div {
     flex-basis: calc(20% - 10px);
@@ -185,7 +183,16 @@ li {
   .columns:not(:last-child) {
     flex-direction: column;
   }
+
+  #movie-info {
+    display: flex;
+    align-content: center;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 13px;
+  } 
 }
+
 
 .more-info-btn:hover {
   cursor: pointer;
