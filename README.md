@@ -10,7 +10,7 @@ Search a movie or show of interest. We will display where your movie/show is str
 
 deployed link: https://jeffch19.github.io/Find-a-movie/ 
 
-![alt text](./Assets/images/pick-a-movie.png)
+![alt text](./Assets/images/Image.png)
 
 ## Project Credits
 
