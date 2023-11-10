@@ -164,7 +164,7 @@ async function apiMovieNightFetch(movie) {
 
 
 function omdbPlotFetch(movie) {
-  var searchUrl = 'http://www.omdbapi.com/';
+  var searchUrl = 'https://www.omdbapi.com/';
   var apiKey = '?apikey=f0621784';
   var movieName = "&i=" + movie;
   var addParam = '&plot=full'
