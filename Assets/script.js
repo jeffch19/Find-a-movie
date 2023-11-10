@@ -3,7 +3,7 @@ $('.reset-btn-div').css('display', 'none');
 var savedWatchlistFullList = $('#full-watchlist')
 
 function omdbFetch(movie) {
-  var searchUrl = 'http://www.omdbapi.com/';
+  var searchUrl = 'https://www.omdbapi.com/';
   var apiKey = '?apikey=f0621784';
   var movieName = "&s=" + movie;
   var url = searchUrl + apiKey + movieName;
