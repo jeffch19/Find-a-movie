@@ -249,7 +249,7 @@ function handleButtonClick(event) {
 
 // reshow movie info on one page after clicking title button from saved watchlist 
 function omdbFetchAgainFullScreen(movie) {
-  var searchUrl = 'http://www.omdbapi.com/';
+  var searchUrl = 'https://www.omdbapi.com/';
   var apiKey = '?apikey=f0621784';
   var movieName = "&s=" + movie;
   var url = searchUrl + apiKey + movieName;
